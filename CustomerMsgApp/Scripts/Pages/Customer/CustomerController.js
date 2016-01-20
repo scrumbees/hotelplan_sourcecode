@@ -49,7 +49,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
     }
 
     function setData() {
-
+        
         $('#CustomorListTBL').dataTable({
             "bFilter": false,
             "bInfo": true,
@@ -85,7 +85,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
                 aoData.push({ "name": "CountryName", "value": CustomerSerach.CountryName });
                 aoData.push({ "name": "ResortName", "value": CustomerSerach.ResortName });
                 aoData.push({ "name": "AccommodationName", "value": CustomerSerach.AccommodationName });
-
+                alert(JSON.stringify(aoData));
                 $.ajax({
                     "dataType": 'json',
                     "type": "POST",
@@ -146,7 +146,8 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
                     "sTitle": "Chain",
                     "mDataProp": "FlightChain"
                 }
-            ]
+            ],
+            "bDestroy": true
         });
     }
 
@@ -371,29 +372,11 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
     }
 
     $scope.Clear = function (Customer) {
-        Customer.TourOpCode = '';
-        Customer.DirectOrAgent = '';
-        Customer.StartDate = '';
-        Customer.DeparturePoint = '';
-        Customer.ArrivalPoint = '';
-        Customer.TravelDate = '';
-        Customer.TravelDepatureTime = '';
-        Customer.TravelArrivalTime = '';
-        Customer.TravelDirection = '';
-        Customer.TransportCarrier = '';
-        Customer.TransportNumber = '';
-        Customer.TransportType = '';
-        Customer.TransportChain = '';
-        Customer.CountryName = '';
-        Customer.ResortName = '';
-        Customer.AccommodationName = '';
-        Customer.MessageText = '';
-        Customer.Password = '';
-        Customer.SendCountSMS = '';
-        Customer.Mobilecount = '';
-        Customer.SendCountSMS = '';
-        Customer.MessageEmail = '';
         $('#msgmaxlength').text('');
+        $scope.EmailEnable == false;
+        $("#overlay img").hide();
+        CustomerSerach = {};
+        getAllCustomerList();
     }
 
     $scope.Done = function (Customer) {
@@ -408,6 +391,8 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
         $scope.divMessageErrorCount = false;
         Customer.MessageEmail = '';
         $('#msgmaxlength').text('');
+        $scope.EmailEnable == false;
+        $("#overlay img").hide();
     }
 
     $scope.EnableEmail = function (Customer) {

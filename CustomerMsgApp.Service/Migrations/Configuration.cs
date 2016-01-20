@@ -9,7 +9,7 @@ namespace CustomerMsgApp.Service.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CustomerMsgApp.Service.CustomerContext context)

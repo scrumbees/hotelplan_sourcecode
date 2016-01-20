@@ -67,7 +67,6 @@
                 <a class="navbar-brand" id="UsrMenu" href="user.html" style="display:none">User</a>
                 <script type="text/javascript">
                     var arrlocl = localStorage['role'].toString().split(',');
-
                     $.each(arrlocl, function (a) {
                         if (arrlocl[a] == "1") {
                             $('#CustMenu').show();
@@ -77,6 +76,8 @@
                         }
                         if (arrlocl[a] == "3") {
                             $('#UsrMenu').show();
+                            $('#MesgMenu').show();
+                            $('#CustMenu').show();
                         }
                     })
                 </script>

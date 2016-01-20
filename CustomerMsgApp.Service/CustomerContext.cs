@@ -24,6 +24,7 @@ namespace CustomerMsgApp.Service
         public DbSet<NotificationLog> NotificationLog { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<NotificationMessageReceived> NotificationMessageReceived { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

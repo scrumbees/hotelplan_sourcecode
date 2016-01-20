@@ -50,6 +50,7 @@
     <Compile Include="NotificationDataSeeds.cs" />
     <Compile Include="NotificationLog.cs" />
     <Compile Include="NotificationData.cs" />
+    <Compile Include="NotificationMessageResponse.cs" />
     <Compile Include="NotificationSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />

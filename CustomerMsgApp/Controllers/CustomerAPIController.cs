@@ -232,12 +232,25 @@ namespace CustomerMsgApp.Controllers
                                     message = string.Format("Seed:{0}", message);
                                 }
 
-                                var notificationResponse = "open";
-                                if (!testMode)
+                                string s = message;
+                                int partLength = 160;
+
+                                if (s == null)
                                 {
-                                    notificationResponse = NotificationService.SendSMS(numberFrom, numberToSendTo, message);
+                                    throw new ArgumentNullException("s");
                                 }
-                                NotificationService.NotificationLogAdd(2, numberToSendTo, item.FirstName, item.Surname, numberFrom, message, notificationResponse, notificationResponse, item.Seed, testMode);
+                                if (partLength <= 0)
+                                {
+                                    throw new ArgumentException("Part length has to be positive.", "partLength");
+                                }
+
+                                for (var i = 0; i < s.Length; i += partLength)
+                                {
+                                    var msg = s.Substring(i, Math.Min(partLength, s.Length - i));
+
+                                    var notificationResponse = NotificationService.SendSMS(numberFrom, numberToSendTo, msg);
+                                    NotificationService.NotificationLogAdd(2, numberToSendTo, item.FirstName, item.Surname, numberFrom, msg, notificationResponse, notificationResponse, item.Seed, testMode);
+                                }
                             }
                             catch (Exception e)
                             {

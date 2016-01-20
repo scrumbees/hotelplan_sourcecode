@@ -17,9 +17,8 @@ app.controller('msglogController', function ($scope, msglogService, $cookies) {
         LogSerach.Status = Log != undefined ? Log.Status : "";
         LogSerach.LogComment = Log != undefined ? Log.LogComment : "";
         LogSerach.CreateDate = $("#CreateDate").val();
-        refreshDatatable();
-
         alert(JSON.stringify(LogSerach));
+        refreshDatatable();
     }
 
     function setData() {
