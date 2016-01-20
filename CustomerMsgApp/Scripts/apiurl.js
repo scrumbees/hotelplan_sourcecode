@@ -1,0 +1,1 @@
+﻿var urlpath = "/CustomerMsgApp/api";

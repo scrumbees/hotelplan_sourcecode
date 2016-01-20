@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customer Messaging App</title>
+
+    <script src="/Scripts/Extra/jquery-2.1.4.min.js"></script>
+    <link href="/Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/simple-sidebar.css" rel="stylesheet" />
+    <link href="/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../Content/datepicker.min.css" />
+    <link rel="stylesheet" href="/Content/bootstrap-timepicker.min.css" />
+    <link href="/Content/dataTables.tableTools.css" rel="stylesheet" />
+    <link href="/Content/dropdowns-enhancement.css" rel="stylesheet" />
+    <link href="/Content/fullcalendar.min.css" rel="stylesheet" />
+    <link href="/Content/scheduler.min.css" rel="stylesheet" />
+    <link href="/Content/Custom.css" rel="stylesheet" />
+
+    <style type="text/css">
+        body {
+            font-size: 12px;
+        }
+
+        #overlay img {
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 11000;
+        }
+    </style>
+    <link href="../Content/jquery.dataTables.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="/Scripts/Extra/bootstrap.js"></script>
+    <script src=" http://momentjs.com/downloads/moment.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../Scripts/Extra/jquery.dataTables.js"></script>
+
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/AngularUI/ui-router.min.js"></script>
+    <script src="/Scripts/angular-sanitize.min.js"></script>
+
+    <script src="/Scripts/app.js"></script>
+    <script src="/Scripts/apiurl.js"></script>
+    <script src="/Scripts/angular-cookies.min.js"></script>
+
+    <!-- Customer Controller Information-->
+    <script src="../Scripts/Pages/Customer/CustomerController.js"></script>
+    <script src="../Scripts/Pages/Customer/CustomerService.js"></script>
+
+    <script src="/Scripts/Pages/Common.js"></script>
+</head>
+<body>
+    <div id="wrapper" ng-app="CustomerMsgApp" ng-controller="customercontroller">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand">Innes</a>
+                <a class="navbar-brand" id="CustMenu" href="customer.html" style="display:none">Customer</a>
+                <a class="navbar-brand" id="MesgMenu" href="messagelog.html" style="display:none">Message Log</a>
+                <a class="navbar-brand" id="UsrMenu" href="user.html" style="display:none">User</a>
+                <script type="text/javascript">
+                    var arrlocl = localStorage['role'].toString().split(',');
+
+                    $.each(arrlocl, function (a) {
+                        if (arrlocl[a] == "1") {
+                            $('#CustMenu').show();
+                        }
+                        if (arrlocl[a] == "2") {
+                            $('#MesgMenu').show();
+                        }
+                        if (arrlocl[a] == "3") {
+                            $('#UsrMenu').show();
+                        }
+                    })
+                </script>
+            </div>
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <button type="button" class="btn btn-default btn-sm" style="margin:10px 20px 0px 0px;">
+                        <a href="login.html"><span class="glyphicon glyphicon-off"></span> Log out</a>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="page-header">
+        </div>
+
+        <div class="bs-example">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Search</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>TourOpCode</label>
+                            <select name="TourOpCode" ng-model="Customer.TourOpCode" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="touropcode in TourOpCode" value="{{touropcode}}">{{touropcode}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>DirectOrAgent</label>
+                            <select name="ddldirectorage" class="form-control" ng-model="Customer.DirectOrAgent">
+                                <option value="">All</option>
+                                <option value="Direct">Direct</option>
+                                <option value="Agent">Agent</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Start Date</label>
+                            <div class='input-group date datePicke1'>
+                                <input type='text' class="form-control" id="StartDate" name="StartDate" ng-model="Customer.StartDate" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Departure Point</label>
+                            <select name="DeparturePoint" ng-model="Customer.DeparturePoint" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="departurepoint in DeparturePoint" value="{{departurepoint}}">{{departurepoint}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Arrival Point</label>
+                            <select name="ArrivalPoint" ng-model="Customer.ArrivalPoint" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="arrivalpoint in ArrivalPoint" value="{{arrivalpoint}}">{{arrivalpoint}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Travel Date</label>
+                            <select name="TravelDate" ng-model="Customer.TravelDate" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="traveldate in TravelDate" value="{{traveldate}}">{{traveldate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Travel Depature Time</label>
+                            <input id="TravelDepatureTime" class="form-control placeholder-no-fix form-control-inline  date-picker" name="TravelDepatureTime" ng-model="Customer.TravelDepatureTime" type="text" />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>TravelArrivalTime</label>
+                            <input id="TravelArrivalTime" class="form-control placeholder-no-fix form-control-inline  date-picker" name="TravelArrivalTime" ng-model="Customer.TravelArrivalTime" type="text" />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>TravelDirection</label>
+                            <select name="TravelDirection" ng-model="Customer.TravelDirection" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="traveldirection in TravelDirection" value="{{traveldirection}}">{{traveldirection}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>TransportCarrier</label>
+                            <select name="TransportCarrier" ng-model="Customer.TransportCarrier" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="transportcarrier in TransportCarrier" value="{{transportcarrier}}">{{transportcarrier}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Transport Number</label>
+                            <select name="TransportNumber" ng-model="Customer.TransportNumber" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="transportnumber in TransportNumber" value="{{transportnumber}}">{{transportnumber}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Transport Type</label>
+                            <select name="TransportType" ng-model="Customer.TransportType" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="transporttype in TransportType" value="{{transporttype}}">{{transporttype}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Transport Chain</label>
+                            <select name="TransportChain" ng-model="Customer.TransportChain" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="transportchain in TransportChain" value="{{transportchain}}">{{transportchain}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Country Name</label>
+                            <select name="CountryName" ng-model="Customer.CountryName" class="form-control" ng-change="GetResortName()">
+                                <option value="">All</option>
+                                <option ng:repeat="countryname in CountryName" value="{{countryname.CountryCode}}">{{countryname.CountryName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Resort Name</label>
+                            <select name="ResortName" ng-model="Customer.ResortName" class="form-control" ng-change="GetAccommodationName()">
+                                <option value="">All</option>
+                                <option ng:repeat="resortname in ResortName" value="{{resortname.ResortCode}}">{{resortname.ResortName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Accommodation Name</label>
+                            <select name="AccommodationName" ng-model="Customer.AccommodationName" class="form-control">
+                                <option value="">All</option>
+                                <option ng:repeat="accommodationname in AccommodationName" value="{{accommodationname.AccommodationCode}}">{{accommodationname.AccommodationName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-primary" style="margin-top: 20px;" ng-click="Search(Customer)">Search</button>
+                            <button class="btn btn-primary" style="margin-top: 20px;" ng-click="Clear(Customer)">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Message</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea placeholder="Message" id="txtMessage" class="form-control" ng-model="Customer.Message"></textarea>
+                            <span id="msgmaxlength" style="color:red;"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" ng-model="EmailEnable" ng-change="EnableEmail(Customer)" /> Enable Email
+                        </div>
+                        <div class="col-md-12">
+                            <textarea placeholder="Email" id="txtMessageEmail" class="form-control" ng-model="Customer.MessageEmail"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <button style="float:right;margin-top:5px;" id="btnSend" class="btn btn-primary" ng-click="Send(Customer)">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Search Result</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="CustomorListTBL" style="max-width:100%!important;overflow-y:scroll">
+                                    <thead>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="bs-example">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <button type="button" class="close" data-dismiss="modal" ng-click="close(Customer)">&times;</button>
+                                    <h3 class="panel-title">Send Message</h3>
+                                </div>
+                                <div class="panel-body" style="margin:10px 10px 10px 10px;">
+                                    <div class="row" id="divMessageSuccess" ng-show="divMessageSuccess">
+                                        <div class="alert alert-success" style="padding:10px 10px 10px 10px;">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            Message sent successfully.
+                                        </div>
+                                    </div>
+                                    <div class="row" id="divMessageError" ng-show="divMessageError">
+                                        <div class="alert alert-danger" style="padding:10px 10px 10px 10px;">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            Incorrect password.
+                                        </div>
+                                    </div>
+                                    <div class="row" id="divMessageErrorCount" ng-show="divMessageErrorCount">
+                                        <div class="alert alert-danger" style="padding:10px 10px 10px 10px;">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            Message count mismatch.
+                                        </div>
+                                    </div>
+                                    <div id="divSendMessage" ng-show="divSendMessage">
+                                        <div class="row">
+                                            <b><div id="BindCount"></div></b>
+                                        </div>
+                                        <div class="clearfix">
+                                            <br />
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label>Please Enter Password:</label>
+                                                <input id="txtPasswordSend" class="form-control" type="password" placeholder="Password" ng-model="Customer.Password" style="width:200px;" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Total Message:</label>
+                                                <input id="txtSendCountSMS" class="form-control" type="text" placeholder="SMS" ng-model="Customer.SendCountSMS" style="width:200px;" />
+                                            </div>
+                                        </div>
+                                        <div class="row" style="float:left; text-align:left;">
+                                            <button class="btn btn-primary" style="margin-top: 20px;" ng-click="SendMessage(Customer)">Send Message</button>
+                                        </div>
+                                    </div>
+                                    <div id="divDone" ng-show="divDone">
+                                        <button class="btn btn-primary" data-dismiss="modal" style="margin-top: 20px;" ng-click="Done(Customer)">Done</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="overlay">
+            <img src="../Img/demo_wait.gif" alt="loading..." style="display:none" />
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+
+        $('.datePicke1').datetimepicker({
+            format: 'MM/DD/YYYY'
+        });
+
+        $('#TravelDepatureTime').datetimepicker({
+            format: 'LT',
+        })
+        $('#TravelArrivalTime').datetimepicker({
+            format: 'LT',
+        })
+        $("#TravelArrivalTime").val(" ");
+    });
+</script>
+
+<script type="text/javascript">
+    $('#txtMessage').keyup(function () {
+        var maxLength = 160;
+        var text = $(this).val();
+        var textLength = text.length;
+        var message = textLength / 160;
+        if (textLength > maxLength) {
+            $('#msgmaxlength').text('WARNING: 1 text = 160 Characters.  Over 160 characters will cost the customer more money.<br/> Total Message:' + parseInt(message));
+        }
+    });
+    $('#txtMessage').keydown(function () {
+        var maxLength = 160;
+        var text = $(this).val();
+        var textLength = text.length;
+        if (textLength < maxLength) {
+            $('#msgmaxlength').text('');
+        }
+    });
+</script>
