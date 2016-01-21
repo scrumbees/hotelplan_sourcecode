@@ -16,6 +16,7 @@
     <link href="/Content/scheduler.min.css" rel="stylesheet" />
     <link href="/Content/Custom.css" rel="stylesheet" />
 
+
     <style type="text/css">
         body {
             font-size: 12px;
@@ -328,6 +329,31 @@
             <img src="../Img/demo_wait.gif" alt="loading..." style="display:none" />
         </div>
     </div>
+
+    <div class="modal fade" id="ModalMessage">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="bs-example">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="panel-title">WARNING</h3>
+                            </div>
+                            <div class="panel-body" style="margin:10px 10px 10px 10px;">
+                                <div class="modal-body">
+                                    <div class="bootstrap-dialog-body">
+                                        <div class="bootstrap-dialog-message">Already Sent</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 <script type="text/javascript">
@@ -354,7 +380,7 @@
         var textLength = text.length;
         var message = textLength / 160;
         if (textLength > maxLength) {
-            $('#msgmaxlength').text('WARNING: 1 text = 160 Characters.  Over 160 characters will cost the customer more money.<br/> Total Message:' + parseInt(message));
+            $('#msgmaxlength').html('WARNING: 1 text = 160 Characters.  Over 160 characters will cost the customer more money.<br/> Total Message:' + parseInt(message));
         }
     });
     $('#txtMessage').keydown(function () {

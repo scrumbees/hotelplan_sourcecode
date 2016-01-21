@@ -43,4 +43,7 @@ app.service('userService', function ($http) {
         return request;
     };
 
+    this.CheckUserNameExist = function (UserName, UserId) {
+        return $http.get("/api/UserAPI/CheckUserNameExist?userName=" + UserName + '&UserId=' + UserId);
+    }
 });

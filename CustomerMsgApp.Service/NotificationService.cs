@@ -315,15 +315,15 @@ namespace CustomerMsgApp.Service
                 if (MessageLogSearch.sSortDir_0 == "asc" && MessageLogSearch.iSortCol_0 == 5) { customer = customer.OrderBy(p => p.LogComment); }
                 if (MessageLogSearch.sSortDir_0 == "desc" && MessageLogSearch.iSortCol_0 == 5) { customer = customer.OrderByDescending(p => p.LogComment); }
 
-                if (MessageLogSearch.sSortDir_0 == "asc" && MessageLogSearch.iSortCol_0 == 5) { customer = customer.OrderBy(p => p.CreateDate); }
-                if (MessageLogSearch.sSortDir_0 == "desc" && MessageLogSearch.iSortCol_0 == 5) { customer = customer.OrderByDescending(p => p.CreateDate); }
+                if (MessageLogSearch.sSortDir_0 == "asc" && MessageLogSearch.iSortCol_0 == 6) { customer = customer.OrderBy(p => p.CreateDate); }
+                if (MessageLogSearch.sSortDir_0 == "desc" && MessageLogSearch.iSortCol_0 == 6) { customer = customer.OrderByDescending(p => p.CreateDate); }
             }
             var datatable = new
             {
                 sEcho = MessageLogSearch.sEcho,
-                iTotalRecords = customer.OrderByDescending(e => e.CreateDate).Skip(MessageLogSearch.iDisplayStart).Take(MessageLogSearch.iDisplayLength).Count(),
+                iTotalRecords = customer.Skip(MessageLogSearch.iDisplayStart).Take(MessageLogSearch.iDisplayLength).Count(),
                 iTotalDisplayRecords = customer.Count(),
-                aaData = customer.OrderByDescending(e => e.CreateDate).Skip(MessageLogSearch.iDisplayStart).Take(MessageLogSearch.iDisplayLength).ToList()
+                aaData = customer.Skip(MessageLogSearch.iDisplayStart).Take(MessageLogSearch.iDisplayLength).ToList()
             };
             return datatable;
         }

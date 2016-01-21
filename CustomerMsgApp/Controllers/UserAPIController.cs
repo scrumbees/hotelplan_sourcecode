@@ -167,5 +167,19 @@ namespace CustomerMsgApp.Controllers
                 return null;
             }
         }
+
+        [HttpGet]
+        public int CheckUserNameExist(string UserName, int UserId)
+        {
+            try
+            {
+                int c = _UserService.CheckUserNameExist(UserName, UserId);
+                return c;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
     }
 }

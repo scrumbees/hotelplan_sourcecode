@@ -49,7 +49,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
     }
 
     function setData() {
-        
+
         $('#CustomorListTBL').dataTable({
             "bFilter": false,
             "bInfo": true,
@@ -85,7 +85,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
                 aoData.push({ "name": "CountryName", "value": CustomerSerach.CountryName });
                 aoData.push({ "name": "ResortName", "value": CustomerSerach.ResortName });
                 aoData.push({ "name": "AccommodationName", "value": CustomerSerach.AccommodationName });
-                alert(JSON.stringify(aoData));
+
                 $.ajax({
                     "dataType": 'json',
                     "type": "POST",
@@ -169,7 +169,8 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
                     $("#myModal").modal();
                 }
                 else {
-                    alert('already sent');
+                    //alert('already sent');
+                    $("#ModalMessage").modal();
                 }
             });
         }
@@ -354,22 +355,35 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
     }
 
     $scope.GetResortName = function () {
-        var promiseGet = customerService.GetResortName($scope.Customer.CountryName);
-        promiseGet.then(function (p1) {
-            $scope.ResortName = p1.data
-        }, function (err) {
-            console.log("Error");
-        });
+        if ($scope.Customer.CountryName != '' && $scope.Customer.CountryName != undefined) {
+            var promiseGet = customerService.GetResortName($scope.Customer.CountryName);
+            promiseGet.then(function (p1) {
+                $scope.ResortName = p1.data
+            }, function (err) {
+                console.log("Error");
+            });
+        }
+        else {
+            $scope.ResortName = [],
+            $scope.Customer.ResortName = '';
+        }
     }
 
     $scope.GetAccommodationName = function () {
-        var promiseGet = customerService.GetAccommodationName($scope.Customer.ResortName);
-        promiseGet.then(function (p1) {
-            $scope.AccommodationName = p1.data
-        }, function (err) {
-            console.log("Error");
-        });
+        if ($scope.Customer.ResortName != '' && $scope.Customer.ResortName != undefined) {
+            var promiseGet = customerService.GetAccommodationName($scope.Customer.ResortName);
+            promiseGet.then(function (p1) {
+                $scope.AccommodationName = p1.data
+            }, function (err) {
+                console.log("Error");
+            });
+        }
+        else {
+            $scope.AccommodationName = [],
+            $scope.Customer.AccommodationName = '';
+        }
     }
+
 
     $scope.Clear = function (Customer) {
         $('#msgmaxlength').text('');

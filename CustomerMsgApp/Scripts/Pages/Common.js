@@ -93,7 +93,7 @@ function ValidateRequiredField2(ctrl, vctrl, ValidationMessage, ValidationPositi
 
 function PrintMessage(ctrl, Message, ValidationPosition) {
     if (ValidationPosition == "after") {
-        $('<span class="errormsg" style="color:red;">' + Message + '</span>').insertAfter($(ctrl));
+        $('<span class="errormsg">' + Message + '</span>').insertAfter($(ctrl));
     }
     else {
         $('<span class="errormsg">' + Message + '</span>').insertBefore($(ctrl));

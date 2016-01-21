@@ -178,5 +178,28 @@ namespace CustomerMsgApp.Service
                          select n).ToList();
             return users;
         }
+
+        public int CheckUserNameExist(string userName, int userId)
+        {
+            try
+            {
+                int c;
+                if (userId != 0)
+                {
+                    c = _UserService.User.Where(u => u.UserName == userName && u.Id != userId).Count();
+                }
+                else
+                {
+                    c = _UserService.User.Where(u => u.UserName == userName).Count();
+                }
+
+                return c;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+
+        }
     }
 }

@@ -19,7 +19,6 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
         }, function (err) {
             console.log("Error");
         });
-        //setData();
     }
 
     function setData() {
@@ -181,14 +180,13 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
                         });
 
                     }
-
                 }
             });
         }
     }
 
     $scope.clearDetail = function () {
-
+        $('.errormsg').remove();
         $scope.Id = 0;
         $scope.UserName = null;
         $scope.Password = null;
@@ -198,6 +196,28 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
         $scope.MobileNo = null;
         $scope.selection = [];
         getAllUserList();
+    }
+
+    $scope.checkUserNameExist = function () {
+        $("#txtUserName").next('.errormsg').remove();
+        $("#txtUserName").prev('.errormsg').remove();
+        if ($scope.Id == undefined) {
+            $scope.Id = 0;
+        }
+        else if ($scope.Id == null) {
+            $scope.Id = 0;
+        }
+
+        var check = userService.CheckUserNameExist($scope.UserName, $scope.Id);
+        check.then(function (p) {
+            if (p.data > 0) {
+                $('<span class="errormsg">' + "UserName already exist" + '</span>').insertAfter($("#txtUserName"));
+            }
+            else {
+                $("#txtUserName").next('.errormsg').remove();
+                $("#txtUserName").prev('.errormsg').remove();
+            }
+        });
     }
 
     function ValidateMessage() {
@@ -215,12 +235,10 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
         if (!ValidateRequiredField($("#txtLastName"), 'Last Name Required', 'after')) {
             flag = false;
         }
-        if ($scope.selection.length == 0)
-        {
+        if ($scope.selection.length == 0) {
             $("#roleerrorMsg").text("Please select Role");
         }
-        else
-        {
+        else {
             $("#roleerrorMsg").text('');
         }
 
