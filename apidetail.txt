@@ -1,2 +1,5 @@
 
-http://localhost:49732/api/NotificationResponse/SavenotificationResponse
+URL: http://localhost:49732/api/NotificationResponse/SavenotificationResponse
+
+JSON data:
+{"Id":0,"From":"1234567890","To":"1234567890","Message":"Hello"}
