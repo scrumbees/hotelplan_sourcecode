@@ -384,11 +384,12 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
         }
     }
 
-
     $scope.Clear = function (Customer) {
         $('#msgmaxlength').text('');
         $scope.EmailEnable == false;
         $("#overlay img").hide();
+        $('input').val('');
+        $('select').val('');
         CustomerSerach = {};
         getAllCustomerList();
     }

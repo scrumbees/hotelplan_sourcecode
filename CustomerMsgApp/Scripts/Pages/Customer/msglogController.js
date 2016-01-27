@@ -13,11 +13,11 @@ app.controller('msglogController', function ($scope, msglogService, $cookies) {
         LogSerach.SentTo = Log != undefined ? Log.SentTo : "";
         LogSerach.FirstName = Log != undefined ? Log.FirstName : "";
         LogSerach.Surname = Log != undefined ? Log.Surname : "";
+        LogSerach.SentFrom = Log != undefined ? Log.SentFrom : "";
         LogSerach.Message = Log != undefined ? Log.Message : "";
         LogSerach.Status = Log != undefined ? Log.Status : "";
         LogSerach.LogComment = Log != undefined ? Log.LogComment : "";
         LogSerach.CreateDate = $("#CreateDate").val();
-        alert(JSON.stringify(LogSerach));
         refreshDatatable();
     }
 
@@ -43,6 +43,8 @@ app.controller('msglogController', function ($scope, msglogService, $cookies) {
             "fnServerData": function (sSource, aoData, fnCallback) {
 
                 aoData.push({ "name": "SentTo", "value": LogSerach.SentTo });
+                aoData.push({ "name": "FirstName", "value": LogSerach.FirstName });
+                aoData.push({ "name": "Surname", "value": LogSerach.Surname });
                 aoData.push({ "name": "FullName", "value": LogSerach.FullName });
                 aoData.push({ "name": "SentFrom", "value": LogSerach.SentFrom });
                 aoData.push({ "name": "Message", "value": LogSerach.Message });
@@ -95,11 +97,19 @@ app.controller('msglogController', function ($scope, msglogService, $cookies) {
                     "sTitle": "SentDate",
                     "mDataProp": "CreateDate"
                 }
-            ]
+            ],
+            "bDestroy": true
         });
     }
 
     function refreshDatatable() {
         $('#MessageLogListTBL').dataTable().fnDraw();
     }
+
+    $scope.Clear = function (Log) {
+        $('input').val('');
+        LogSerach = {};
+        getAllLogList();
+    }
+
 });
