@@ -3,6 +3,29 @@ var LogSerach = new Object();
 var _MessageLogList = null;
 
 app.controller('msglogController', function ($scope, msglogService, $cookies) {
+
+    var arrlocl = localStorage['role'].toString().split(',');
+    $.each(arrlocl, function (a) {
+        if (arrlocl[a] == "1") {
+            bootbox.confirm("You are not allowed to access this page.", function (result) {
+                if (result == true) {
+                    window.location.href = "/Views/Login.html";
+                }
+                else {
+                    window.location.href = "/Views/Login.html";
+                }
+            });
+        }
+        if (arrlocl[a] == "2") {
+            $('#MesgMenu').show();
+        }
+        if (arrlocl[a] == "3") {
+            $('#UsrMenu').show();
+            $('#MesgMenu').show();
+            $('#CustMenu').show();
+        }
+    })
+
     getAllLogList();
 
     function getAllLogList() {

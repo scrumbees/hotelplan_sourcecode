@@ -29,6 +29,6 @@ namespace CustomerMsgApp.Model
         public string LogComment { get; set; }
         public bool Seed { get; set; }
         public bool TestMode { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
 }

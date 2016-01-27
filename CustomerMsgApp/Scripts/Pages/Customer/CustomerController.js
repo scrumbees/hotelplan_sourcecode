@@ -5,6 +5,29 @@ var Mobilecount = 0;
 var MailCount = 0;
 
 app.controller('customercontroller', function ($scope, customerService, $cookies) {
+
+    var arrlocl = localStorage['role'].toString().split(',');
+    $.each(arrlocl, function (a) {
+        if (arrlocl[a] == "1") {
+            $('#CustMenu').show();
+        }
+        if (arrlocl[a] == "2") {
+            bootbox.confirm("You are not allowed to access this page.", function (result) {
+                if (result == true) {
+                    window.location.href = "/Views/Login.html";
+                }
+                else {
+                    window.location.href = "/Views/Login.html";
+                }
+            });
+        }
+        if (arrlocl[a] == "3") {
+            $('#UsrMenu').show();
+            $('#MesgMenu').show();
+            $('#CustMenu').show();
+        }
+    })
+
     $scope.divSendMessage = true;
     $scope.format = 'yyyy-MM-dd';
     var isDefault = false;

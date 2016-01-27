@@ -34,7 +34,19 @@ app.controller('logincontroller', function ($scope, loginService, $cookies) {
                     role.push(roleId);
                 });
                 localStorage['role'] = role;
-                window.location.href = "/Views/messagelog.html";
+              
+                var arrlocl = localStorage['role'].toString().split(',');
+                $.each(arrlocl, function (a) {
+                    if (arrlocl[a] == "1") {
+                        window.location.href = "/Views/customer.html";
+                    }
+                    if (arrlocl[a] == "2") {
+                        window.location.href = "/Views/messagelog.html";
+                    }
+                    if (arrlocl[a] == "3") {
+                        window.location.href = "/Views/customer.html";
+                    }
+                })
 
                 $cookies.putObject('user', p1.data);
                 var f = $cookies.get('user');

@@ -163,10 +163,10 @@ namespace CustomerMsgApp.Service
                 {
                     NotificationLogList = from e in NotificationLogList where e.SentFrom.ToString().Trim().ToLower() == MessageLogSearch.SentFrom.ToString().Trim().ToLower() select e;
                 }
-                //if (MessageLogSearch.CreateDate != null)
-                //{
-                //    NotificationLogList = from e in NotificationLogList where DbFunctions.TruncateTime(e.CreateDate) == DbFunctions.TruncateTime(MessageLogSearch.CreateDate) select e;
-                //}
+                if (MessageLogSearch.CreateDate != null)
+                {
+                    NotificationLogList = from e in NotificationLogList where DbFunctions.TruncateTime(e.CreateDate) == DbFunctions.TruncateTime(MessageLogSearch.CreateDate) select e;
+                }
                 return NotificationLogList;
             }
             catch (Exception)

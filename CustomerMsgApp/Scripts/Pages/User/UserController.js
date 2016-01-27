@@ -109,8 +109,10 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
 
             var promiseGet = userService.GetUserRole(user.Id);
             promiseGet.then(function (p2) {
-                var roleid = p2.data[0].RoleId;
-                $scope.selection.push(roleid);
+                angular.forEach(p2.data, function (value, key) {
+                    var roleid = value.RoleId;
+                    $scope.selection.push(roleid);
+                });
             });
             $("#adduser").modal('show');
         },
@@ -154,7 +156,6 @@ app.controller('usercontroller', function ($scope, userService, $cookies, $compi
                 if (res != 0) {
 
                     if ($scope.selection.length > 0) {
-
                         var deleteUserRole = userService.DeleteUserRole(res);
                         deleteUserRole.then(function (delRole) {
 
