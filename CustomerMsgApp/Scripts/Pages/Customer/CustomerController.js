@@ -182,20 +182,21 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
             return false;
         }
         else {
-            var checkdata = customerService.CheckExists(Customer);
-            checkdata.then(function (cus) {
-                var res = cus.data;
-                if (!res) {
-                    flag = false;
-                }
-                if (flag) {
-                    $("#myModal").modal();
-                }
-                else {
-                    //alert('already sent');
-                    $("#ModalMessage").modal();
-                }
-            });
+            $("#myModal").modal();
+            //var checkdata = customerService.CheckExists(Customer);
+            //checkdata.then(function (cus) {
+            //    var res = cus.data;
+            //    if (!res) {
+            //        flag = false;
+            //    }
+            //    if (flag) {
+            //        $("#myModal").modal();
+            //    }
+            //    else {
+            //        //alert('already sent');
+            //        //$("#ModalMessage").modal();
+            //    }
+            //});
         }
     }
 
@@ -228,6 +229,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
         CustomerSerach.SendCountSMS = Customer.Mobilecount;
 
         var sendMessage = customerService.SendMessage(Customer);
+        $scope.divSendMessage = false;
         sendMessage.then(function (cus) {
             var res = cus.data;
             if (res == '1') {
@@ -301,6 +303,7 @@ app.controller('customercontroller', function ($scope, customerService, $cookies
         $scope.divDone = false;
         $scope.divMessageError = false;
         $scope.divMessageErrorCount = false;
+        $("#overlay img").hide();
     }
 
     function GetTourOpCode() {

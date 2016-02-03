@@ -335,7 +335,6 @@ namespace CustomerMsgApp.Service
             var NotificationDataList = this.NotificationDataList(NotificationSearch);
             try
             {
-                
                 foreach (var item in NotificationDataList)
                 {
                     if (!string.IsNullOrEmpty(item.Email))
